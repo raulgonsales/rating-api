@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+    php:
+        build: ./docker/php
+        volumes:
+            - .:/code
+        depends_on:
+            - db
+        env_file:
+            - .env.test
+            - .env
+    nginx:
+        image: nginx:alpine
+        volumes:
+            - .:/code
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+        ports:
+            - 81:80
+    db:
+        image: mysql:5.7
+        ports:
+          - "3307:3306"
+        environment:
+          MYSQL_ROOT_PASSWORD: 'password'
+          MYSQL_DATABASE: 'rating_api'
+          MYSQL_USER: 'user'
+          MYSQL_PASSWORD: 'pass'
+    adminer:
+        image: adminer:latest
+        ports:
+            - 83:8080
+        depends_on:
+            - db
