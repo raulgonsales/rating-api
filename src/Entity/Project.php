@@ -49,16 +49,16 @@ class Project
     private $title;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="feedback_rating", type="integer", length=1)
+     * @ORM\Column(name="feedback_rating", type="integer", length=1, nullable="true")
      */
     private $feedbackRating;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="feedback_improvement_text", type="text")
+     * @ORM\Column(name="feedback_improvement_text", type="text", nullable="true")
      */
     private $feedbackImprovementText;
 
@@ -103,17 +103,17 @@ class Project
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getFeedbackRating(): int
+    public function getFeedbackRating(): ?int
     {
         return $this->feedbackRating;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFeedbackImprovementText(): string
+    public function getFeedbackImprovementText(): ?string
     {
         return $this->feedbackImprovementText;
     }

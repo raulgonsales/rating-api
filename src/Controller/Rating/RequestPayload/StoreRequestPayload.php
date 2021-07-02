@@ -5,7 +5,7 @@ namespace App\Controller\Rating\RequestPayload;
 class StoreRequestPayload
 {
     /** @var int */
-    private $id;
+    private $projectId;
 
     /** @var int */
     private $feedbackRating;
@@ -14,11 +14,23 @@ class StoreRequestPayload
     private $feedbackImprovementText;
 
     /**
+     * @param  int          $projectId
+     * @param  int          $feedbackRating
+     * @param  string|null  $feedbackImprovementText
+     */
+    public function __construct(int $projectId, int $feedbackRating, ?string $feedbackImprovementText)
+    {
+        $this->projectId = $projectId;
+        $this->feedbackRating = $feedbackRating;
+        $this->feedbackImprovementText = $feedbackImprovementText;
+    }
+
+    /**
      * @return int
      */
-    public function getId(): int
+    public function getProjectId(): int
     {
-        return $this->id;
+        return $this->projectId;
     }
 
     /**
