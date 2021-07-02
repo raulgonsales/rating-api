@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     bash \
     nano \
     vim \
-    mc
+    mc \
+    iputils-ping
 
 RUN docker-php-ext-install intl opcache pdo_mysql \
     && pecl install apcu xdebug-3.0.4 \
