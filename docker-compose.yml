@@ -31,3 +31,11 @@ services:
             - 83:8080
         depends_on:
             - db
+    cli:
+        build: ./docker/cli
+        volumes:
+            - .:/code
+        command: ["tail", "-f", "/dev/null"]
+        env_file:
+            - .env.test
+            - .env
