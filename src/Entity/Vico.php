@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name='vico')
+ * @ORM\Table(name="vico")
  * @ORM\Entity()
  */
 class Vico
