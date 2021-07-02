@@ -49,6 +49,20 @@ class Project
     private $title;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="feedback_rating", type="integer", length=1)
+     */
+    private $feedbackRating;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="feedback_improvement_text", type="text")
+     */
+    private $feedbackImprovementText;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -89,6 +103,22 @@ class Project
     }
 
     /**
+     * @return int
+     */
+    public function getFeedbackRating(): int
+    {
+        return $this->feedbackRating;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeedbackImprovementText(): string
+    {
+        return $this->feedbackImprovementText;
+    }
+
+    /**
      * @param  Client  $creator
      */
     public function setCreator(Client $creator): void
@@ -110,5 +140,21 @@ class Project
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    /**
+     * @param  int  $feedbackRating
+     */
+    public function setFeedbackRating(int $feedbackRating): void
+    {
+        $this->feedbackRating = $feedbackRating;
+    }
+
+    /**
+     * @param  string  $feedbackImprovementText
+     */
+    public function setFeedbackImprovementText(string $feedbackImprovementText): void
+    {
+        $this->feedbackImprovementText = $feedbackImprovementText;
     }
 }
