@@ -20,7 +20,7 @@ services:
         image: mysql:5.7
         ports:
           - "3307:3306"
-        environment:
+        environment: #do not hate me plz
           MYSQL_ROOT_PASSWORD: 'password'
           MYSQL_DATABASE: 'rating_api'
           MYSQL_USER: 'user'
