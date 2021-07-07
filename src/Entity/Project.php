@@ -51,9 +51,30 @@ class Project
     /**
      * @var int|null
      *
-     * @ORM\Column(name="feedback_rating", type="integer", length=1, nullable="true")
+     * @ORM\Column(name="feedback_overall_rating", type="integer", length=1, nullable="true")
      */
-    private $feedbackRating;
+    private $feedbackOverallRating;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="feedback_communication_rating", type="integer", length=1, nullable="true")
+     */
+    private $feedbackCommunicationRating;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="feedback_quality_rating", type="integer", length=1, nullable="true")
+     */
+    private $feedbackQualityRating;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="feedback_pricing_rating", type="integer", length=1, nullable="true")
+     */
+    private $feedbackPricingRating;
 
     /**
      * @var string|null
@@ -105,9 +126,33 @@ class Project
     /**
      * @return int|null
      */
-    public function getFeedbackRating(): ?int
+    public function getFeedbackOverallRating(): ?int
     {
-        return $this->feedbackRating;
+        return $this->feedbackOverallRating;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFeedbackCommunicationRating(): ?int
+    {
+        return $this->feedbackCommunicationRating;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFeedbackQualityRating(): ?int
+    {
+        return $this->feedbackQualityRating;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFeedbackPricingRating(): ?int
+    {
+        return $this->feedbackPricingRating;
     }
 
     /**
@@ -143,11 +188,35 @@ class Project
     }
 
     /**
-     * @param  int  $feedbackRating
+     * @param  int  $feedbackOverallRating
      */
-    public function setFeedbackRating(int $feedbackRating): void
+    public function setFeedbackOverallRating(int $feedbackOverallRating): void
     {
-        $this->feedbackRating = $feedbackRating;
+        $this->feedbackOverallRating = $feedbackOverallRating;
+    }
+
+    /**
+     * @param  int|null  $feedbackCommunicationRating
+     */
+    public function setFeedbackCommunicationRating(?int $feedbackCommunicationRating): void
+    {
+        $this->feedbackCommunicationRating = $feedbackCommunicationRating;
+    }
+
+    /**
+     * @param  int|null  $feedbackQualityRating
+     */
+    public function setFeedbackQualityRating(?int $feedbackQualityRating): void
+    {
+        $this->feedbackQualityRating = $feedbackQualityRating;
+    }
+
+    /**
+     * @param  int|null  $feedbackPricingRating
+     */
+    public function setFeedbackPricingRating(?int $feedbackPricingRating): void
+    {
+        $this->feedbackPricingRating = $feedbackPricingRating;
     }
 
     /**
