@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: 'Vico rating system API'
+  version: 1.0.0
+paths:
+  /rating/store:
+    put:
+      tags:
+        - rating
+      summary: 'Stores rating given from project creator to Vico on a specific project.'
+      operationId: 35845a845b016c9e437810fd0e70d88c
+      requestBody:
+        description: 'JSON Payload'
+        required: true
+        content:
+          application/json:
+            schema:
+              maxProperties: 6
+              minProperties: 5
+              required:
+                - projectId
+                - feedbackOverallRating
+                - feedbackCommunicationRating
+                - feedbackQualityRating
+                - feedbackPricingRating
+              properties:
+                projectId:
+                  type: integer
+                  example: 65
+                feedbackOverallRating:
+                  type: integer
+                  example: 5
+                feedbackCommunicationRating:
+                  type: integer
+                  example: 3
+                feedbackQualityRating:
+                  type: integer
+                  example: 4
+                feedbackPricingRating:
+                  type: integer
+                  example: 4
+                feedbackImprovementText:
+                  type: string
+                  example: 'Good job!'
+              type: object
+      responses:
+        '200':
+          description: Success.
+        '404':
+          description: 'Could not find project id.'

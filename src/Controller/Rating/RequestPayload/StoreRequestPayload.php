@@ -8,20 +8,41 @@ class StoreRequestPayload
     private $projectId;
 
     /** @var int */
-    private $feedbackRating;
+    private $feedbackOverallRating;
+
+    /** @var int */
+    private $feedbackCommunicationRating;
+
+    /** @var int */
+    private $feedbackQualityRating;
+
+    /** @var int */
+    private $feedbackPricingRating;
 
     /** @var string|null */
     private $feedbackImprovementText;
 
     /**
      * @param  int          $projectId
-     * @param  int          $feedbackRating
+     * @param  int          $feedbackOverallRating
+     * @param  int          $feedbackCommunicationRating
+     * @param  int          $feedbackQualityRating
+     * @param  int          $feedbackPricingRating
      * @param  string|null  $feedbackImprovementText
      */
-    public function __construct(int $projectId, int $feedbackRating, ?string $feedbackImprovementText)
-    {
+    public function __construct(
+        int $projectId,
+        int $feedbackOverallRating,
+        int $feedbackCommunicationRating,
+        int $feedbackQualityRating,
+        int $feedbackPricingRating,
+        ?string $feedbackImprovementText
+    ) {
         $this->projectId = $projectId;
-        $this->feedbackRating = $feedbackRating;
+        $this->feedbackOverallRating = $feedbackOverallRating;
+        $this->feedbackCommunicationRating = $feedbackCommunicationRating;
+        $this->feedbackQualityRating = $feedbackQualityRating;
+        $this->feedbackPricingRating = $feedbackPricingRating;
         $this->feedbackImprovementText = $feedbackImprovementText;
     }
 
@@ -36,9 +57,33 @@ class StoreRequestPayload
     /**
      * @return int
      */
-    public function getFeedbackRating(): int
+    public function getFeedbackOverallRating(): int
     {
-        return $this->feedbackRating;
+        return $this->feedbackOverallRating;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeedbackCommunicationRating(): int
+    {
+        return $this->feedbackCommunicationRating;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeedbackQualityRating(): int
+    {
+        return $this->feedbackQualityRating;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeedbackPricingRating(): int
+    {
+        return $this->feedbackPricingRating;
     }
 
     /**

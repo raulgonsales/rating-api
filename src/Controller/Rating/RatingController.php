@@ -5,6 +5,7 @@ namespace App\Controller\Rating;
 use App\Controller\Rating\RequestPayload\StoreRequestPayload;
 use App\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,17 +18,78 @@ class RatingController extends AbstractController
     /**
      * @Route("/store", methods={"PUT"})
      * @ParamConverter("requestPayload", converter="fos_rest.request_body")
+     * @OA\Put(
+     *     path="/rating/store",
+     *     summary="Stores rating given from project creator to Vico on a specific project.",
+     *     tags={"rating"},
+     *     @OA\RequestBody(
+     *         description="JSON Payload",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 maxProperties=6,
+     *                 minProperties=5,
+     *                 type="object",
+     *                 required={"projectId","feedbackOverallRating","feedbackCommunicationRating","feedbackQualityRating","feedbackPricingRating"},
+     *                 @OA\Property(
+     *                     property="projectId",
+     *                     type="integer",
+     *                     example=65
+     *                 ),
+     *                 @OA\Property(
+     *                     property="feedbackOverallRating",
+     *                     type="integer",
+     *                     example=5
+     *                 ),
+     *                 @OA\Property(
+     *                     property="feedbackCommunicationRating",
+     *                     type="integer",
+     *                     example=3
+     *                 ),
+     *                 @OA\Property(
+     *                     property="feedbackQualityRating",
+     *                     type="integer",
+     *                     example=4
+     *                 ),
+     *                 @OA\Property(
+     *                     property="feedbackPricingRating",
+     *                     type="integer",
+     *                     example=4
+     *                 ),
+     *                 @OA\Property(
+     *                     property="feedbackImprovementText",
+     *                     type="string",
+     *                     example="Good job!"
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Could not find project id."
+     *     )
+     * )
      */
     public function storeRating(StoreRequestPayload $requestPayload): Response
     {
         /** @var Project $projectEntity */
         $projectEntity = $this->getDoctrine()->getRepository(Project::class)->find($requestPayload->getProjectId());
-        $projectEntity->setFeedbackRating($requestPayload->getFeedbackRating());
+        $projectEntity->setFeedbackOverallRating($requestPayload->getFeedbackOverallRating());
+        $projectEntity->setFeedbackCommunicationRating($requestPayload->getFeedbackCommunicationRating());
+        $projectEntity->setFeedbackQualityRating($requestPayload->getFeedbackQualityRating());
+        $projectEntity->setFeedbackPricingRating($requestPayload->getFeedbackPricingRating());
         $projectEntity->setFeedbackImprovementText($requestPayload->getFeedbackImprovementText());
-        
+
         $this->getDoctrine()->getManager()->persist($projectEntity);
         $this->getDoctrine()->getManager()->flush();
-        
-        return $this->json('Rating score ' . $projectEntity->getFeedbackRating() . ' for project ' . $projectEntity->getTitle() . ' is saved.');
+
+        return $this->json([
+            'result' => Response::$statusTexts[200]
+        ]);
     }
 }
