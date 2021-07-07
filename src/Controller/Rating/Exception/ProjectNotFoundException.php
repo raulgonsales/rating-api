@@ -2,7 +2,9 @@
 
 namespace App\Controller\Rating\Exception;
 
-class ProjectNotFoundException extends \Exception
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
+class ProjectNotFoundException extends HttpException
 {
-    
+
 }

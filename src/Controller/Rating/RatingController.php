@@ -5,6 +5,7 @@ namespace App\Controller\Rating;
 use App\Controller\Rating\Exception\ProjectNotFoundException;
 use App\Controller\Rating\RequestPayload\StoreRequestPayload;
 use App\Entity\Project;
+use App\Http\ApiResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,12 +78,12 @@ class RatingController extends AbstractController
      * )
      * @throws ProjectNotFoundException
      */
-    public function storeRating(StoreRequestPayload $requestPayload): Response
+    public function storeRating(StoreRequestPayload $requestPayload): ApiResponse
     {
         /** @var Project $projectEntity */
         $projectEntity = $this->getDoctrine()->getRepository(Project::class)->find($requestPayload->getProjectId());
         if ($projectEntity === null) {
-            throw new ProjectNotFoundException('Project with ID ' . $requestPayload->getProjectId() .  ' not found.', 404);
+            throw new ProjectNotFoundException(404, 'Project with ID ' . $requestPayload->getProjectId() .  ' not found.');
         }
 
         $projectEntity->setFeedbackOverallRating($requestPayload->getFeedbackOverallRating());
@@ -94,8 +95,8 @@ class RatingController extends AbstractController
         $this->getDoctrine()->getManager()->persist($projectEntity);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json([
-            'result' => Response::$statusTexts[200]
+        return new ApiResponse('Success', [
+            'projectId' => $projectEntity->getId()
         ]);
     }
 }

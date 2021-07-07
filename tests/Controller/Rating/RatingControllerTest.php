@@ -2,12 +2,8 @@
 
 namespace App\Tests\Controller\Rating;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\AbstractManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +42,11 @@ class RatingControllerTest extends WebTestCase
             ])
         );
         
-        $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+        $this->assertSame(
+            '{"message":"Project with ID 65 not found.","data":{},"errors":["Project with ID 65 not found."]}',
+            $client->getResponse()->getContent()
+        );
     }
 
     public function testActionStoreBadRequestCode400Returned()
