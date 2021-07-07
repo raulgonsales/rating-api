@@ -2,6 +2,7 @@
 
 namespace App\Controller\Rating;
 
+use App\Controller\Rating\Exception\ProjectNotFoundException;
 use App\Controller\Rating\RequestPayload\StoreRequestPayload;
 use App\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -74,11 +75,16 @@ class RatingController extends AbstractController
      *         description="Could not find project id."
      *     )
      * )
+     * @throws ProjectNotFoundException
      */
     public function storeRating(StoreRequestPayload $requestPayload): Response
     {
         /** @var Project $projectEntity */
         $projectEntity = $this->getDoctrine()->getRepository(Project::class)->find($requestPayload->getProjectId());
+        if ($projectEntity === null) {
+            throw new ProjectNotFoundException('Project with ID ' . $requestPayload->getProjectId() .  ' not found.', 404);
+        }
+
         $projectEntity->setFeedbackOverallRating($requestPayload->getFeedbackOverallRating());
         $projectEntity->setFeedbackCommunicationRating($requestPayload->getFeedbackCommunicationRating());
         $projectEntity->setFeedbackQualityRating($requestPayload->getFeedbackQualityRating());

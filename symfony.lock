@@ -91,6 +91,9 @@
             "config/packages/fos_rest.yaml"
         ]
     },
+    "monolog/monolog": {
+        "version": "2.3.0"
+    },
     "php": {
         "version": "7.3"
     },
@@ -127,6 +130,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "symfony/browser-kit": {
+        "version": "v5.3.0"
+    },
     "symfony/cache": {
         "version": "v5.3.3"
     },
@@ -153,6 +159,9 @@
     },
     "symfony/deprecation-contracts": {
         "version": "v2.4.0"
+    },
+    "symfony/dom-crawler": {
+        "version": "v5.3.0"
     },
     "symfony/dotenv": {
         "version": "v5.3.0"
@@ -211,6 +220,24 @@
     },
     "symfony/http-kernel": {
         "version": "v5.3.3"
+    },
+    "symfony/monolog-bridge": {
+        "version": "v5.3.3"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.7",
+            "ref": "a7bace7dbc5a7ed5608dbe2165e0774c87175fe6"
+        },
+        "files": [
+            "config/packages/dev/monolog.yaml",
+            "config/packages/prod/deprecations.yaml",
+            "config/packages/prod/monolog.yaml",
+            "config/packages/test/monolog.yaml"
+        ]
     },
     "symfony/orm-pack": {
         "version": "v2.1.0"
