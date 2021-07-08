@@ -2,7 +2,9 @@
 
 namespace App\Tests\Controller\Rating;
 
+use App\Entity\Project;
 use Doctrine\Persistence\AbstractManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +12,53 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RatingControllerTest extends WebTestCase
 {
+    public function testActionStoreGood()
+    {
+        $client = static::createClient();
+        $client->disableReboot();
+        
+        $container = self::getContainer();
+        
+        $projectEntity = $this->createMock(Project::class);
+        $projectEntity->expects($this->once())->method('getId')->willReturn(65);
+        
+        $objectRepository = $this->createMock(ObjectRepository::class);
+        $objectRepository->expects($this->any())->method('find')->willReturn($projectEntity);
+        
+        $objectManager = $this->createMock(ObjectManager::class);
+        $objectManager->expects($this->any())->method('persist');
+        $objectManager->expects($this->any())->method('flush');
+        
+        $managerRegistry = $this->createMock(AbstractManagerRegistry::class);
+        $managerRegistry->expects($this->any())->method('getRepository')->willReturn($objectRepository);
+        $managerRegistry->expects($this->any())->method('getManager')->willReturn($objectManager);
+        $container->set('doctrine', $managerRegistry);
+        
+        $client->request(
+            Request::METHOD_PUT,
+            '/api/v1/rating/store',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json'
+            ],
+            json_encode([
+                'projectId' => 65,
+                'feedbackOverallRating' => 5,
+                'feedbackCommunicationRating' => 4,
+                'feedbackQualityRating' => 2,
+                'feedbackPricingRating' => 3,
+                'feedbackImprovementText' => 'Very good'
+            ])
+        );
+        
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertSame(
+            '{"message":"Success","data":{"projectId":65}}',
+            $client->getResponse()->getContent()
+        );
+    }
+
     public function testActionStoreNotExistingProjectIdExceptionThrown()
     {
         $client = static::createClient();
