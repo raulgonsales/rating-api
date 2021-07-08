@@ -59,7 +59,10 @@
     "scripts": {
         "test": "php bin/phpunit",
         "stan": "php vendor/bin/phpstan analyse -l 7 src",
-        "all": "test stan",
+        "all": [
+            "composer run stan",
+            "composer run test"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"

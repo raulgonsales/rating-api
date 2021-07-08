@@ -9,6 +9,7 @@ use App\Helpers\PayloadValidatorException;
 use App\Helpers\PayloadValidatorHelper;
 use App\Http\ApiResponse;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use OpenApi\Annotations as OA;
@@ -23,7 +24,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class RatingController extends AbstractController
 {
-    
     /** @var LoggerInterface */
     private $logger;
 

@@ -7,14 +7,14 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class NormalizerFactory
 {
     /**
-     * @var array<int,NormalizerInterface>
+     * @var iterable<int,NormalizerInterface>
      */
     private $normalizers;
     
     /**
-     * @param array<int,NormalizerInterface> $normalizers
+     * @param iterable<int,NormalizerInterface> $normalizers
      */
-    public function __construct(array $normalizers)
+    public function __construct(iterable $normalizers)
     {
         $this->normalizers = $normalizers;
     }

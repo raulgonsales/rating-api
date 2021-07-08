@@ -16,24 +16,25 @@ class RatingControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->disableReboot();
-        
+
         $container = self::getContainer();
-        
+
         $projectEntity = $this->createMock(Project::class);
         $projectEntity->expects($this->once())->method('getId')->willReturn(65);
-        
+
         $objectRepository = $this->createMock(ObjectRepository::class);
         $objectRepository->expects($this->any())->method('find')->willReturn($projectEntity);
-        
+
         $objectManager = $this->createMock(ObjectManager::class);
         $objectManager->expects($this->any())->method('persist');
         $objectManager->expects($this->any())->method('flush');
-        
+
         $managerRegistry = $this->createMock(AbstractManagerRegistry::class);
         $managerRegistry->expects($this->any())->method('getRepository')->willReturn($objectRepository);
         $managerRegistry->expects($this->any())->method('getManager')->willReturn($objectManager);
+
         $container->set('doctrine', $managerRegistry);
-        
+
         $client->request(
             Request::METHOD_PUT,
             '/api/v1/rating/store',
@@ -51,7 +52,7 @@ class RatingControllerTest extends WebTestCase
                 'feedbackImprovementText' => 'Very good'
             ])
         );
-        
+
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         $this->assertSame(
             '{"message":"Success","data":{"projectId":65}}',

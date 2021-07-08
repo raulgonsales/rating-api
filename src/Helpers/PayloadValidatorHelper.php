@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Controller\RequestPayload\BaseRequestPayload;
 use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PayloadValidatorHelper
