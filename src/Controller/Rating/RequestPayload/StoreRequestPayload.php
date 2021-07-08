@@ -2,21 +2,48 @@
 
 namespace App\Controller\Rating\RequestPayload;
 
-class StoreRequestPayload
+use App\Controller\RequestPayload\BaseRequestPayload;
+use Symfony\Component\Validator\Constraints as Assert;
+
+class StoreRequestPayload implements BaseRequestPayload
 {
     /** @var int */
     private $projectId;
 
-    /** @var int */
+    /**
+     * @var int
+     * @Assert\Range(
+     *     min="1",
+     *     max="5"
+     * )
+     */
     private $feedbackOverallRating;
-
-    /** @var int */
+    
+    /**
+     * @var int
+     * @Assert\Range(
+     *     min="1",
+     *     max="5"
+     * )
+     */
     private $feedbackCommunicationRating;
-
-    /** @var int */
+    
+    /**
+     * @var int
+     * @Assert\Range(
+     *     min="1",
+     *     max="5"
+     * )
+     */
     private $feedbackQualityRating;
-
-    /** @var int */
+    
+    /**
+     * @var int
+     * @Assert\Range(
+     *     min="1",
+     *     max="5"
+     * )
+     */
     private $feedbackPricingRating;
 
     /** @var string|null */

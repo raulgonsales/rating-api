@@ -98,6 +98,29 @@ class RatingControllerTest extends WebTestCase
         );
     }
 
+    public function testActionStoreBadRequestFeedbackOverallRatingIsNotInRangeFrom1To5Code400Returned()
+    {
+        $client = static::createClient();
+        $client->request(
+            Request::METHOD_PUT,
+            '/api/v1/rating/store',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json'
+            ],
+            json_encode([
+                'projectId' => 1,
+                'feedbackOverallRating' => 7,
+                'feedbackCommunicationRating' => 4,
+                'feedbackQualityRating' => 4,
+                'feedbackPricingRating' => 4,
+                'feedbackImprovementText' => 'Very good'
+            ])
+        );
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+    }
+
     public function testActionStoreBadRequestCode400Returned()
     {
         $client = static::createClient();

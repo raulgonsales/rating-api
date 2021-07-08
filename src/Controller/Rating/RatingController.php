@@ -5,13 +5,18 @@ namespace App\Controller\Rating;
 use App\Controller\Rating\Exception\ProjectNotFoundException;
 use App\Controller\Rating\RequestPayload\StoreRequestPayload;
 use App\Entity\Project;
+use App\Helpers\PayloadValidatorException;
+use App\Helpers\PayloadValidatorHelper;
 use App\Http\ApiResponse;
 use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/v1/rating")
@@ -21,12 +26,16 @@ class RatingController extends AbstractController
     
     /** @var LoggerInterface */
     private $logger;
+
+    /** @var PayloadValidatorHelper */
+    private $payloadValidatorHelper;
     
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, PayloadValidatorHelper $payloadValidatorHelper)
     {
         $this->logger = $logger;
+        $this->payloadValidatorHelper = $payloadValidatorHelper;
     }
-
+    
     /**
      * @Route("/store", methods={"PUT"})
      * @ParamConverter("requestPayload", converter="fos_rest.request_body")
@@ -88,6 +97,7 @@ class RatingController extends AbstractController
      * )
      * @throws ProjectNotFoundException
      * @throws Exception
+     * @throws PayloadValidatorException
      */
     public function storeRating(StoreRequestPayload $requestPayload): ApiResponse
     {
@@ -97,8 +107,12 @@ class RatingController extends AbstractController
         ];
 
         try {
+            $this->payloadValidatorHelper->validatePayload($requestPayload);
             /** @var Project $projectEntity */
             $projectEntity = $this->getDoctrine()->getRepository(Project::class)->find($requestPayload->getProjectId());
+        } catch (PayloadValidatorException $exception) {
+            $this->logger->info('Validation failed on request payload.', $logContext);
+            throw new BadRequestHttpException($exception->getMessage(), $exception);
         } catch (Exception $exception) {
             $this->logger->critical('Error getting project from database.', $logContext);
             throw $exception;
