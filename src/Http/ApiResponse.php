@@ -9,9 +9,9 @@ class ApiResponse extends JsonResponse
     /**
      * @param string $message
      * @param mixed  $data
-     * @param array  $errors
+     * @param array<int,string>  $errors
      * @param int    $status
-     * @param array  $headers
+     * @param array<string,string>  $headers
      * @param bool   $json
      */
     public function __construct(string $message, $data = null, array $errors = [], int $status = 200, array $headers = [], bool $json = false)
@@ -24,9 +24,9 @@ class ApiResponse extends JsonResponse
      *
      * @param string $message
      * @param mixed  $data
-     * @param array  $errors
+     * @param array<int,string>  $errors
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function format(string $message, $data = null, array $errors = []): array
     {

@@ -31,6 +31,7 @@
         "zircote/swagger-php": "^3.2"
     },
     "require-dev": {
+        "phpstan/extension-installer": "^1.1",
         "symfony/phpunit-bridge": "^5.3"
     },
     "config": {
@@ -56,6 +57,9 @@
         "symfony/polyfill-php72": "*"
     },
     "scripts": {
+        "test": "php bin/phpunit",
+        "stan": "php vendor/bin/phpstan analyse -l 7 src",
+        "all": "test stan",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"

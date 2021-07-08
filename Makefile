@@ -14,3 +14,11 @@ check: test stan
 generate-api-doc:
 	docker-compose up -d cli
 	docker-compose exec cli php ./vendor/bin/openapi . -o docs/openapi.yaml -e vendor -e tests -e var -e docker -e bin -e docs -e migrations -e config
+
+test:
+	docker-compose up -d cli
+	docker-compose exec cli php bin/phpunit
+
+stan:
+	docker-compose up -d cli
+	docker-compose exec cli php vendor/bin/phpstan analyse -l 0 src

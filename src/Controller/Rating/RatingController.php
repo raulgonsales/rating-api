@@ -97,7 +97,6 @@ class RatingController extends AbstractController
      * )
      * @throws ProjectNotFoundException
      * @throws Exception
-     * @throws PayloadValidatorException
      */
     public function storeRating(StoreRequestPayload $requestPayload): ApiResponse
     {
@@ -108,7 +107,6 @@ class RatingController extends AbstractController
 
         try {
             $this->payloadValidatorHelper->validatePayload($requestPayload);
-            /** @var Project $projectEntity */
             $projectEntity = $this->getDoctrine()->getRepository(Project::class)->find($requestPayload->getProjectId());
         } catch (PayloadValidatorException $exception) {
             $this->logger->info('Validation failed on request payload.', $logContext);

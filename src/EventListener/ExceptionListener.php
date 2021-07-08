@@ -36,7 +36,7 @@ class ExceptionListener
     /**
      * Creates the ApiResponse from any Exception
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      *
      * @return ApiResponse
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
@@ -48,6 +48,9 @@ class ExceptionListener
     
         try {
             $errors = $normalizer ? $normalizer->normalize($exception) : [];
+            if (!is_array($errors)) {
+                throw new \Exception();
+            }
         } catch (\Exception $e) {
             $errors = [];
         }

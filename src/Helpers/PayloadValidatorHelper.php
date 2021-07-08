@@ -21,7 +21,7 @@ class PayloadValidatorHelper
      * @param  BaseRequestPayload  $requestPayload
      * @throws PayloadValidatorException
      */
-    public function validatePayload(BaseRequestPayload $requestPayload)
+    public function validatePayload(BaseRequestPayload $requestPayload): void
     {
         $errors = [];
         /** @var ConstraintViolation $violation */
@@ -29,7 +29,11 @@ class PayloadValidatorHelper
             $errors[] = $violation->getPropertyPath() . ': ' . $violation->getMessage();
         }
         if (count($errors) > 0) {
-            throw new PayloadValidatorException(json_encode($errors));
+            $encodedErrors = json_encode($errors);
+            if ($encodedErrors === false) {
+                $encodedErrors = 'Unknown error happened.';
+            }
+            throw new PayloadValidatorException($encodedErrors);
         }
     }
 }
