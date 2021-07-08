@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ApiResponse extends JsonResponse
 {
     /**
-     * ApiResponse constructor.
-     *
      * @param string $message
      * @param mixed  $data
      * @param array  $errors

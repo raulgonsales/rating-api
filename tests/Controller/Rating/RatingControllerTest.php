@@ -41,7 +41,7 @@ class RatingControllerTest extends WebTestCase
                 'feedbackImprovementText' => 'Very good'
             ])
         );
-        
+
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $this->assertSame(
             '{"message":"Project with ID 65 not found.","data":{},"errors":["Project with ID 65 not found."]}',
@@ -59,9 +59,9 @@ class RatingControllerTest extends WebTestCase
             [],
             [],
             json_encode([
-                "projectId" => 1,
-                "feedbackOverallRating" => 5,
-                "feedbackCommunicationRating" => 4
+                'projectId' => 1,
+                'feedbackOverallRating' => 5,
+                'feedbackCommunicationRating' => 4
             ])
         );
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
