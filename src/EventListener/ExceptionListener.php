@@ -10,9 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
-    /**
-     * @var NormalizerFactory
-     */
+    /** @var NormalizerFactory */
     private $normalizerFactory;
     
     /**
@@ -24,7 +22,8 @@ class ExceptionListener
     }
     
     /**
-     * @param ExceptionEvent $event
+     * @param  ExceptionEvent  $event
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
